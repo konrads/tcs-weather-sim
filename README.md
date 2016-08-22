@@ -63,8 +63,9 @@ To test
 -------
 
 Note: some tests also load the large PNGs, hence run bit slower. 
-
-    sbt test
+```bash
+sbt test
+```
 
 To run
 ------
@@ -72,26 +73,30 @@ To run
 Via cli:
 
 * repeatable simulation:
-
-    sbt "cli/run valid-input.csv"
+```bash
+sbt "cli/run valid-input.csv"
+```
     
 * randomized simulation:
+```bash
+sbt "cli/run -s random valid-input.csv"
+```
 
-    sbt "cli/run -s random valid-input.csv"
-    
 * with input errors:
-
-    sbt "cli/run invalid-input.csv"
-
+```bash
+sbt "cli/run invalid-input.csv"
+```
 
 Via tcp-server:
 
 * start the tcp-server:
+```bash
+sbt "tcp_server/run"
+```    
 
-    sbt "tcp_server/run"
-    
 * run the client
-    
-    cat valid-input.csv | netcat 127.0.0.1 6666
-    # ctrl-c
-    cat invalid-input.csv | netcat 127.0.0.1 6666
+```bash    
+cat valid-input.csv | netcat 127.0.0.1 6666
+# ctrl-c
+cat invalid-input.csv | netcat 127.0.0.1 6666
+```
