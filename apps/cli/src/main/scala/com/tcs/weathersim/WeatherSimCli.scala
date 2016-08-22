@@ -6,12 +6,13 @@ import cats.std.all._
 import com.tcs.weathersim.model.{Simulation, SimulationReq}
 import com.tcs.weathersim.util._
 import com.typesafe.config.ConfigFactory
+
 import scala.io.Source
 
 /**
   * Entrypoint to the Weather simulator.
   */
-object WeatherSimApp {
+object WeatherSimCli {
 
   private val validSelectors = Seq("repeatable", "random")
   case class Params(selectorName: String = "repeatable", configFile: Option[File] = None, inputFile: File = new File("input.csv"))
@@ -55,7 +56,7 @@ object WeatherSimApp {
           },
           {
             simReqs =>
-              val sims = simReqs.unwrap.map(req => weatherSim.getSimulations(req))
+              val sims = simReqs.unwrap.map(req => weatherSim.getSimulation(req))
               val asStrs = sims.map(PSVCodec.encode[Simulation])
               println(asStrs.mkString("\n"))
           }

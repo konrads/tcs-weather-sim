@@ -28,7 +28,7 @@ class WeatherSim(config: Config)(implicit val selector: Selector) {
   private val pressureService = new PressureService(minPressure, maxPressure, highestPointOnEarth)
   private val temperatureService = new TemperatureService(minTemp, maxTemp, highestPointOnEarth)
 
-  def getSimulations(req: SimulationReq): Simulation = {
+  def getSimulation(req: SimulationReq): Simulation = {
     val elev = elevationGrid(req.lat, req.long)
     val massType = massTypeGrid(req.lat, req.long)
     val season = Season.get(req.dt, req.lat)

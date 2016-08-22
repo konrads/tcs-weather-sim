@@ -4,10 +4,10 @@ Weather Simulation
 Architecture
 ------------
 
-Main entrypoint is the `WeatherSimApp`. It accepts command line parameters, reads the config and input files, instantiates `WeatherSim`.
-`WeatherSim` is an orchestrator service, responsible for:
+There are 2 entrypoints: `WeatherSimCli` and `WeatherSimTcpServer`. Both take command line params and read the config file, and boostrap by reading large PNG files (18Mb and 4Mb). `WeatherSimCli` processes the input, generates and prints the `Simulations`, and exits. However due to the boostrap, this causes a performance hit on every invocation. `WeatherSimTcpServer` only bootstraps once and awaits requests via TCP socket.
 
-* lookup of configuration constants
+Both entrypoint instantiate `WeatherSim`, which orchestrates construction of `Simulation`s by:
+
 * loading PNG data for `Elevation` and `Land`/`Water` (ie. `MassType`) mask
 * creating a `Selector` which provides the ability to chose a value based on some weights. Implementations of the `Selector`:
   * `RepeatableSelector` - always returns the same selection for the same weights
@@ -32,6 +32,16 @@ Entities used throughout are classified into:
 * composite entities comprising of canonicals - used for input/output: `Simulation`, `SimulationReq`
 
 
+Project structure
+-----------------
+
+Multi-project approach was used to cater for multiple entrypoints:
+
+* apps/core - the engine of the simulator, with tests
+* apps/cli - contains `WeatherSimCli` executable
+* apps/tcp_server - contains `WeatherSimTcpServer` executable
+
+
 Assumptions
 -----------
 
@@ -49,23 +59,39 @@ Assumptions
 * Doubles are used for most measurements, except for `Humidity` which uses Int %. Should rounding-off cause discrepancies, alternative would be to switch to Int/Long, and increase the precision by multiplying by 100 or 1000 
 
 
-To run
-------
+To test
+-------
 
-Note: running of the following requires pre-loading of PNGs, which takes a while due to their large sizes (18Mb and 4Mb). 
-
-To run tests:
+Note: some tests also load the large PNGs, hence run bit slower. 
 
     sbt test
 
-To run repeatable simulation:
+To run
+------
 
-    sbt "run valid-input.csv"
+Via cli:
+
+* repeatable simulation:
+
+    sbt "cli/run valid-input.csv"
     
-To run randomized simulation:
+* randomized simulation:
 
-    sbt "run -s random valid-input.csv"
+    sbt "cli/run -s random valid-input.csv"
     
-To generate some input errors:
+* with input errors:
 
-    sbt "run invalid-input.csv"
+    sbt "cli/run invalid-input.csv"
+
+
+Via tcp-server:
+
+* start the tcp-server:
+
+    sbt "tcp_server/run"
+    
+* run the client
+    
+    cat valid-input.csv | netcat 127.0.0.1 6666
+    # ctrl-c
+    cat invalid-input.csv | netcat 127.0.0.1 6666

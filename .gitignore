@@ -1,5 +1,8 @@
-/project/project/
-/project/target/
-/target/
+/project/project
+/project/target
+/target
+/apps/core/target
+/apps/cli/target
+/apps/tcp_server/target
 .idea
 .DS_Store

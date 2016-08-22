@@ -13,7 +13,7 @@ class WeatherSimSpec extends FlatSpec with Matchers {
   val sim = new WeatherSim(config)
 
   "WeatherSim" should "get Simulation" in {
-    val s = sim.getSimulations(SimulationReq(Latitude(-33.86), Longitude(151.21), new DateTime(0)))
+    val s = sim.getSimulation(SimulationReq(Latitude(-33.86), Longitude(151.21), new DateTime(0)))
     s.location shouldBe Some(Location("Sydney"))
     s.condition shouldBe Sunny
     s.pressure shouldBe Pressure(300)
