@@ -8,3 +8,5 @@ libraryDependencies ++= Seq(
 )
 
 fork in Test := true
+
+test in assembly := {}

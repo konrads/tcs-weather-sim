@@ -67,6 +67,12 @@ Note: some tests also load the large PNGs, hence run bit slower.
 sbt test
 ```
 
+To assemble deployable artifacts
+--------------------------------
+```bash
+sbt assembly
+```
+
 To run
 ------
 
@@ -74,16 +80,22 @@ Via cli:
 
 * repeatable simulation:
 ```bash
+java -jar apps/cli/target/scala-2.11/weather-sim-cli-assembly-1.0.jar valid-input.csv
+# or
 sbt "cli/run valid-input.csv"
 ```
     
 * randomized simulation:
 ```bash
+java -jar apps/cli/target/scala-2.11/weather-sim-cli-assembly-1.0.jar -s random valid-input.csv
+# or
 sbt "cli/run -s random valid-input.csv"
 ```
 
 * with input errors:
 ```bash
+java -jar apps/cli/target/scala-2.11/weather-sim-cli-assembly-1.0.jar invalid-input.csv
+# or
 sbt "cli/run invalid-input.csv"
 ```
 
@@ -91,6 +103,8 @@ Via tcp-server:
 
 * start the tcp-server:
 ```bash
+java -jar apps/tcp_server/target/scala-2.11/weather-sim-tcp-server-assembly-1.0.jar
+# or
 sbt "tcp_server/run"
 ```    
 
