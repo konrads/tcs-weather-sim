@@ -6,7 +6,7 @@ import cats.{Semigroup, _}
 import com.tcs.weathersim.model.canonical._
 import com.tcs.weathersim.util.PSVCodec
 import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormat
+import org.joda.time.format.ISODateTimeFormat
 
 /**
   * Represents the Simulation output.
@@ -17,7 +17,7 @@ case class Simulation(location: Option[Location], lat: Latitude, long: Longitude
 
 object Simulation {
   implicit val psvCodec = new PSVCodec[Simulation] {
-    val dateFmt = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").withZoneUTC()
+    val dateFmt = ISODateTimeFormat.dateTimeNoMillis.withZoneUTC()
 
     override def toElems(s: Simulation): Seq[String] =
       Seq(
