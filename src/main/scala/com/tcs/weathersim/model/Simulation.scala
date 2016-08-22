@@ -1,0 +1,32 @@
+package com.tcs.weathersim.model
+
+import cats.data.{NonEmptyList => NEL}
+import cats.std.all._
+import cats.{Semigroup, _}
+import com.tcs.weathersim.model.canonical._
+import com.tcs.weathersim.util.PSVCodec
+import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
+
+case class Simulation(location: Option[Location], lat: Latitude, long: Longitude,
+                      elevation: Elevation, dateTime: DateTime, condition: Condition,
+                      temperature: Temperature, pressure: Pressure, humidity: Humidity)
+
+object Simulation {
+  implicit val psvCodec = new PSVCodec[Simulation] {
+    val dateFmt = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").withZoneUTC()
+
+    override def toElems(s: Simulation): Seq[String] =
+      Seq(
+        s.location.map(_.self).getOrElse(""),
+        "%.2f,%.2f,%.2f".format(s.lat.self, s.long.self, s.elevation.self),
+        dateFmt.print(s.dateTime),
+        s.condition.toString,
+        "%.2f".format(s.temperature.self),
+        "%.2f".format(s.pressure.self),
+        "%d".format(s.humidity.self)
+      )
+  }
+
+  implicit val nelSemigroup: Semigroup[NEL[Simulation]] = SemigroupK[NEL].algebra[Simulation]
+}
