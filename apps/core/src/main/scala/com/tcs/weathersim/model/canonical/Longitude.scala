@@ -1,3 +1,3 @@
 package com.tcs.weathersim.model.canonical
 
-case class Longitude(self: Double) extends AnyVal
+case class Longitude(value: Double) extends AnyVal

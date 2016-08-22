@@ -23,10 +23,10 @@ class WeatherSim(config: Config)(implicit val selector: Selector) {
   private val elevationGrid = PNGGrid.readElevations(pngElevation, highestPointOnEarth)
   private val massTypeGrid = PNGGrid.readMassTypeMask(pngMassType)
   private val conditionService = new ConditionService
-  private val humidityService = new HumidityService(minHumidity, maxHumidity, highestPointOnEarth)
+  private val humidityService = new HumidityService(Humidity(minHumidity), Humidity(maxHumidity), Elevation(highestPointOnEarth))
   private val locationService = new LocationService(config)
-  private val pressureService = new PressureService(minPressure, maxPressure, highestPointOnEarth)
-  private val temperatureService = new TemperatureService(minTemp, maxTemp, highestPointOnEarth)
+  private val pressureService = new PressureService(Pressure(minPressure), Pressure(maxPressure), Elevation(highestPointOnEarth))
+  private val temperatureService = new TemperatureService(Temperature(minTemp), Temperature(maxTemp), Elevation(highestPointOnEarth))
 
   def getSimulation(req: SimulationReq): Simulation = {
     val elev = elevationGrid(req.lat, req.long)

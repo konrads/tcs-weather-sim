@@ -14,16 +14,16 @@ class PNGGrid[T](width: Int, height: Int, data: Array[Byte],
               normalizer: (Int) => T) {
   assert(width > 0, "width <= 0")
   assert(height > 0, "height <= 0")
-  assert(maxLong.self > minLong.self, "maxLong <= minLong")
-  assert(maxLat.self > minLat.self, "maxLat <= minLat")
-  private val longRange = maxLong.self - minLong.self
-  private val latRange = maxLat.self - minLat.self
+  assert(maxLong.value > minLong.value, "maxLong <= minLong")
+  assert(maxLat.value > minLat.value, "maxLat <= minLat")
+  private val longRange = maxLong.value - minLong.value
+  private val latRange = maxLat.value - minLat.value
   private val longStep = longRange / width.toDouble
   private val latStep = latRange / height.toDouble
 
   def apply(lat: Latitude, long: Longitude): T = {
-    val latInd = ((maxLat.self-lat.self)/latStep).toInt
-    val longInd = ((long.self+maxLong.self)/longStep).toInt
+    val latInd = ((maxLat.value-lat.value)/latStep).toInt
+    val longInd = ((long.value+maxLong.value)/longStep).toInt
     val asSignedByte = data(latInd*width + longInd)
     val asUnsignedInt = asSignedByte & 0xFF
     normalizer(asUnsignedInt)

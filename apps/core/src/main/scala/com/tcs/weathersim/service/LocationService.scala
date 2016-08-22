@@ -14,6 +14,6 @@ class LocationService(config: Config) {
   def getLocation(lat: Latitude, long: Longitude): Option[Location] =
     locationBoundaries.collectFirst {
       case LocationBoundary(loc, minLat, minLong, maxLat, maxLong)
-        if minLat.self <= lat.self && minLong.self <= long.self && maxLat.self > lat.self && maxLong.self > long.self => loc
+        if minLat.value <= lat.value && minLong.value <= long.value && maxLat.value > lat.value && maxLong.value > long.value => loc
     }
 }

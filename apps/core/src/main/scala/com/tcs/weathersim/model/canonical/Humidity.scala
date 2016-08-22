@@ -1,3 +1,3 @@
 package com.tcs.weathersim.model.canonical
 
-case class Humidity(self: Int) extends AnyVal
+case class Humidity(value: Int) extends AnyVal

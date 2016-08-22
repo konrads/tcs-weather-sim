@@ -20,8 +20,8 @@ class ConditionService(implicit selector: Selector) {
       case Land => 0.8
       case Water => 0.2
     }
-    val isSunny = selector.select(false, true, seasonSunnyWeight, massTypeSunnyWeight)
+    val isSunny = selector.select(left=false, right=true, seasonSunnyWeight, massTypeSunnyWeight)
     if (isSunny) Sunny
-    else if (temp.self > 0) Rain else Snow
+    else if (temp.value > 0) Rain else Snow
   }
 }

@@ -22,12 +22,12 @@ object Simulation {
     override def toElems(s: Simulation): Seq[String] =
       Seq(
         s.location.map(_.self).getOrElse(""),
-        "%.2f,%.2f,%.2f".format(s.lat.self, s.long.self, s.elevation.self),
+        "%.2f,%.2f,%.2f".format(s.lat.value, s.long.value, s.elevation.value),
         dateFmt.print(s.dateTime),
         s.condition.toString,
-        "%.2f".format(s.temperature.self),
-        "%.2f".format(s.pressure.self),
-        "%d".format(s.humidity.self)
+        "%.2f".format(s.temperature.value),
+        "%.2f".format(s.pressure.value),
+        "%d".format(s.humidity.value)
       )
   }
 

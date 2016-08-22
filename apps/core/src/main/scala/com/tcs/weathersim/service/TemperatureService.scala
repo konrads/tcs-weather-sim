@@ -11,13 +11,13 @@ import com.tcs.weathersim.util.Selector
   * - hour of day, highest at noon
   * - season (highest at Summer, lowest at Winter)
   */
-class TemperatureService(minTemp: Double, maxTemp: Double, highestPoint: Double)(implicit selector: Selector) {
+class TemperatureService(minTemp: Temperature, maxTemp: Temperature, highestPoint: Elevation)(implicit selector: Selector) {
   def getTemperature(lat: Latitude, elev: Elevation, massType: MassType, hourOfDay: Int, season: Season): Temperature = {
-    val latWeight = 1.0 - Math.abs(lat.self)/90
+    val latWeight = 1.0 - Math.abs(lat.value)/90
 
-    val elevWeight = elev.self match {
+    val elevWeight = elev.value match {
       case x if x <= 0 => 0.0
-      case x => (highestPoint - elev.self)/highestPoint
+      case x => (highestPoint.value - elev.value)/highestPoint.value
     }
 
     val hourWeight = hourOfDay match {
@@ -34,7 +34,7 @@ class TemperatureService(minTemp: Double, maxTemp: Double, highestPoint: Double)
       case _ => 0.5
     }
 
-    val temp = selector.select(minTemp, maxTemp, latWeight, elevWeight, hourWeight, massTypeSeasonyWeight)
+    val temp = selector.select(minTemp.value, maxTemp.value, latWeight, elevWeight, hourWeight, massTypeSeasonyWeight)
     Temperature(temp)
   }
 }

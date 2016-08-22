@@ -15,7 +15,7 @@ object Season {
   def get(dt: DateTime, lat: Latitude): Season = {
     import SeasonalBoundaries._
     val dayOfYear = dt.getDayOfYear
-    val isNorthern = lat.self > 0
+    val isNorthern = lat.value > 0
     if (dayOfYear < b1 || dayOfYear > b4)
       if (isNorthern) Winter else Summer
     else if (dayOfYear < b2)

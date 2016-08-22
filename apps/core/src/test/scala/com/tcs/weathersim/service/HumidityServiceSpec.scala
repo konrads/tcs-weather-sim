@@ -6,7 +6,7 @@ import org.scalatest.{FlatSpec, Matchers}
 
 class HumidityServiceSpec extends FlatSpec with Matchers {
   implicit val selector: Selector = RepeatableSelector
-  val service = new HumidityService(10, 70, 1000)
+  val service = new HumidityService(Humidity(10), Humidity(70), Elevation(1000))
 
   "HumidityService" should "get low humidity" in {
     service.getHumidity(Elevation(900), Land, Summer, 12) shouldBe Humidity(16)

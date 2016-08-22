@@ -18,6 +18,6 @@ class WeatherSimSpec extends FlatSpec with Matchers {
     s.condition shouldBe Sunny
     s.pressure shouldBe Pressure(300)
     s.humidity shouldBe Humidity(32)
-    s.temperature.self should equal (5.0 +- 1.0)
+    s.temperature.value should equal (5.0 +- 1.0)
   }
 }

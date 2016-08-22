@@ -10,11 +10,11 @@ import com.tcs.weathersim.util.Selector
   * - season (winter is more humid)
   * - hour of day, mornings most humid
   */
-class HumidityService(minHumidity: Int, maxHumidity: Int, highestPoint: Double)(implicit selector: Selector) {
+class HumidityService(minHumidity: Humidity, maxHumidity: Humidity, highestPoint: Elevation)(implicit selector: Selector) {
   def getHumidity(elev: Elevation, massType: MassType, season: Season, hourOfDay: Int): Humidity = {
-    val elevWeight = elev.self match {
+    val elevWeight = elev.value match {
       case x if x <= 0 => 0.0
-      case x => (highestPoint - elev.self)/highestPoint
+      case x => (highestPoint.value - elev.value)/highestPoint.value
     }
     val landMassWeight = massType match {
       case Land => 0.1
@@ -25,7 +25,7 @@ class HumidityService(minHumidity: Int, maxHumidity: Int, highestPoint: Double)(
       case h if h >= 12 && h < 17 => 0.1
       case _ => 0.5
     }
-    val humidity = selector.select(minHumidity, maxHumidity, elevWeight, landMassWeight, hourWeight)
+    val humidity = selector.select(minHumidity.value, maxHumidity.value, elevWeight, landMassWeight, hourWeight)
     Humidity(humidity)
   }
 }

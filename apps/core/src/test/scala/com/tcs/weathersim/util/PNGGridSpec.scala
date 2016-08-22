@@ -9,20 +9,20 @@ class PNGGridSpec extends FlatSpec with Matchers {
 
   "PNGGrid" should "obtain reasonable elevations for Himalayas" in {
     val himalayas = elevations(Latitude(38.6), Longitude(75.2))
-    himalayas.self should be > 7000.0
-    himalayas.self should be < 9000.0
+    himalayas.value should be > 7000.0
+    himalayas.value should be < 9000.0
   }
 
   it should "obtain reasonable elevations for Andes" in {
     val andes = elevations(Latitude(-16.73), Longitude(-67.48))
-    andes.self should be > 5000.0
-    andes.self should be < 6000.0
+    andes.value should be > 5000.0
+    andes.value should be < 6000.0
   }
 
   it should "obtain reasonable elevations for Sydney" in {
     val sydney = elevations(Latitude(-33.9), Longitude(151.22))
-    sydney.self should be >  0.0
-    sydney.self should be < 50.0
+    sydney.value should be >  0.0
+    sydney.value should be < 50.0
   }
 
   it should "detect land in Sydney" in {
