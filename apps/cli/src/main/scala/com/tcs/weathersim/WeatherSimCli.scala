@@ -2,6 +2,7 @@ package com.tcs.weathersim
 
 import java.io.File
 
+import cats.data.{NonEmptyList => NEL}
 import cats.std.all._
 import com.tcs.weathersim.model.{Simulation, SimulationReq}
 import com.tcs.weathersim.util._
@@ -45,22 +46,24 @@ object WeatherSimCli {
         else
           RepeatableSelector
         val weatherSim = new WeatherSim(config)
-        val input = Source.fromFile(inputFile).getLines
-        val validated = CSVCodec.decode[SimulationReq](input)
-        validated.fold(
-          {
-            errs =>
-              val asStrs = errs.unwrap.map(err => s"line: ${err.line}, error: ${err.errMsg}")
-              println(s"""Input errors:\n${asStrs.mkString("\n")}""")
-              sys.exit(-3)
-          },
-          {
-            simReqs =>
-              val sims = simReqs.map(req => weatherSim.getSimulation(req))
-              val asStrs = sims.map(PSVCodec.encode[Simulation])
-              println(asStrs.mkString("\n"))
-          }
-        )
+        val inputO = NEL.fromList(Source.fromFile(inputFile).getLines.toList)
+        inputO.foreach { input =>
+          val validated = CSVCodec.decode[SimulationReq](input)
+          validated.fold(
+            {
+              errs =>
+                val asStrs = errs.unwrap.map(err => s"line: ${err.line}, error: ${err.errMsg}")
+                println(s"""Input errors:\n${asStrs.mkString("\n")}""")
+                sys.exit(-3)
+            },
+            {
+              simReqs =>
+                val sims = simReqs.map(req => weatherSim.getSimulation(req))
+                val asStrs = sims.map(PSVCodec.encode[Simulation])
+                println(asStrs.unwrap.mkString("\n"))
+            }
+          )
+        }
     }
   }
 }

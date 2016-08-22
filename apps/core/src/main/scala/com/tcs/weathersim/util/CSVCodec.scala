@@ -1,7 +1,7 @@
 package com.tcs.weathersim.util
 
-import cats.data.Validated.{Invalid, Valid, invalidNel, valid}
-import cats.data.{NonEmptyList => NEL, Validated, Xor}
+import cats.data.Validated.{invalidNel, valid}
+import cats.data.{NonEmptyList => NEL, Validated}
 import cats.std.all._
 import cats.{Semigroup, _}
 
@@ -27,17 +27,10 @@ object CSVCodec {
       invalidNel(CSVParseErr(line, "Unparsable line"))
   }
 
-  def decode[T: CSVCodec](lines: Iterator[String]): Xor[NEL[CSVParseErr], Seq[T]] = {
-    if (lines.isEmpty)
-      Xor.Right(Seq.empty[T])
-    else {
-      val validated = lines.map(CSVCodec.decode[T]).reduce(_ combine _)
-      validated match {
-        case Invalid(err) => Xor.Left(err)
-        case Valid(simReqs) => Xor.Right(simReqs.unwrap)
-      }
-    }
-  }
+  def decode[T: CSVCodec](lines: NEL[String]): Validated[NEL[CSVParseErr], NEL[T]] =
+    lines.map { line =>
+      CSVCodec.decode[T](line)
+    }.unwrap.reduce(_ combine _)
 }
 
 case class CSVParseErr(line: String, errMsg: String)
