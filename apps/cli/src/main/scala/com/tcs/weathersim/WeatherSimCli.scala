@@ -56,7 +56,7 @@ object WeatherSimCli {
           },
           {
             simReqs =>
-              val sims = simReqs.unwrap.map(req => weatherSim.getSimulation(req))
+              val sims = simReqs.map(req => weatherSim.getSimulation(req))
               val asStrs = sims.map(PSVCodec.encode[Simulation])
               println(asStrs.mkString("\n"))
           }
