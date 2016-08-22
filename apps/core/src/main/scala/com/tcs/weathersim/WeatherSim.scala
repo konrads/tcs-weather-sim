@@ -6,6 +6,9 @@ import com.tcs.weathersim.service._
 import com.tcs.weathersim.util._
 import com.typesafe.config.Config
 
+import scala.collection.JavaConverters._
+
+
 /**
   * Orchestrator for all services and data stores (PNG) required to produce simulation.
   */
@@ -19,12 +22,13 @@ class WeatherSim(config: Config)(implicit val selector: Selector) {
   private val maxPressure = config.getDouble("constants.max_pressure")
   private val minTemp = config.getDouble("constants.min_temperature")
   private val maxTemp = config.getDouble("constants.max_temperature")
+  private val locationBoundaries = config.getObjectList("locations").asScala.map(lc => LocationBoundary.parse(lc.toConfig))
 
   private val elevationGrid = PNGGrid.readElevations(pngElevation, highestPointOnEarth)
   private val massTypeGrid = PNGGrid.readMassTypeMask(pngMassType)
   private val conditionService = new ConditionService
   private val humidityService = new HumidityService(Humidity(minHumidity), Humidity(maxHumidity), Elevation(highestPointOnEarth))
-  private val locationService = new LocationService(config)
+  private val locationService = new LocationService(locationBoundaries)
   private val pressureService = new PressureService(Pressure(minPressure), Pressure(maxPressure), Elevation(highestPointOnEarth))
   private val temperatureService = new TemperatureService(Temperature(minTemp), Temperature(maxTemp), Elevation(highestPointOnEarth))
 

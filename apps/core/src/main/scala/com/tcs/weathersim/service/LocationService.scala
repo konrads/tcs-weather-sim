@@ -1,16 +1,12 @@
 package com.tcs.weathersim.service
 
-import com.tcs.weathersim.model.canonical.{LocationBoundary, Latitude, Location, Longitude}
-import com.typesafe.config.Config
-
-import scala.collection.JavaConverters._
+import com.tcs.weathersim.model.canonical.{Latitude, Location, LocationBoundary, Longitude}
 
 /**
-  * Location (ie. well known label) defined in config.
+  * Location (ie. well known label) is defined in config.
+  * Mocked up service in this instance, in reality would be far more complex.
   */
-class LocationService(config: Config) {
-  val locationBoundaries = config.getObjectList("locations").asScala.map(lc => LocationBoundary.parse(lc.toConfig))
-
+class LocationService(locationBoundaries: Seq[LocationBoundary]) {
   def getLocation(lat: Latitude, long: Longitude): Option[Location] =
     locationBoundaries.collectFirst {
       case LocationBoundary(loc, minLat, minLong, maxLat, maxLong)
