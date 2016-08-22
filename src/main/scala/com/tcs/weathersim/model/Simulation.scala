@@ -8,6 +8,9 @@ import com.tcs.weathersim.util.PSVCodec
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 
+/**
+  * Represents the Simulation output.
+  */
 case class Simulation(location: Option[Location], lat: Latitude, long: Longitude,
                       elevation: Elevation, dateTime: DateTime, condition: Condition,
                       temperature: Temperature, pressure: Pressure, humidity: Humidity)

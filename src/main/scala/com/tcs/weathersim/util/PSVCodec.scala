@@ -5,8 +5,6 @@ package com.tcs.weathersim.util
   */
 trait PSVCodec[T] {
   def toElems(t: T): Seq[String]
-  // in the future:
-  // def read(s: String): T
 }
 
 object PSVCodec {

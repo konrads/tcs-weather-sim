@@ -50,7 +50,7 @@ object WeatherSimApp {
           {
             errs =>
               val asStrs = errs.unwrap.map(err => s"line: ${err.line}, error: ${err.errMsg}")
-              println(s"""Request processing errors:\n${asStrs.mkString("\n")}""")
+              println(s"""Input errors:\n${asStrs.mkString("\n")}""")
               sys.exit(-3)
           },
           {

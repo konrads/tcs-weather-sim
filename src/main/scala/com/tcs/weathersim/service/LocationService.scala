@@ -1,7 +1,6 @@
 package com.tcs.weathersim.service
 
-import com.tcs.weathersim.model.LocationBoundary
-import com.tcs.weathersim.model.canonical.{Latitude, Location, Longitude}
+import com.tcs.weathersim.model.canonical.{LocationBoundary, Latitude, Location, Longitude}
 import com.typesafe.config.Config
 
 import scala.collection.JavaConverters._

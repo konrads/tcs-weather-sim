@@ -7,6 +7,9 @@ import org.joda.time.format.DateTimeFormat
 
 import scala.util.Try
 
+/**
+  * Represents a Simulation request.
+  */
 case class SimulationReq(lat: Latitude, long: Longitude, dt: DateTime)
 
 object SimulationReq {
