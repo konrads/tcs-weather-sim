@@ -46,6 +46,9 @@ Assumptions
 -----------
 
 * locations are Earth based, with `Latitude`/`Longitude` coordinates
+* layout of following images (originating from http://visibleearth.nasa.gov) match coordinate boundaries: latitude [-90, 90], and longitude: [-180, 180]
+  * elevation map ([gebco_08_rev_elev_21600x10800.png](apps/core/src/main/resources/gebco_08_rev_elev_21600x10800.png)), with signed pixel value range of [0, 256] mapping to [sea level, mt.everest height]
+  * water/land mask ([water_16k.png](apps/core/src/main/resources/water_16k.png)), with pixel values: 0 -> land, 1 -> water
 * following constants (supplied in `application.conf`) represent extreme values used in weight calculations:
   * highest_point_on_earth = 8848
   * min_humidity = 20
