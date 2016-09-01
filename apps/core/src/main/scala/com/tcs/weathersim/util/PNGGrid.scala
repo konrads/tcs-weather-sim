@@ -9,9 +9,9 @@ import com.tcs.weathersim.model.canonical._
   * PNGGrid encapsulates a PNG image that represents a map in Latitude/Longitude coordinates.
   */
 class PNGGrid[T](width: Int, height: Int, data: Array[Byte],
-              minLong: Longitude = Longitude(-180), maxLong: Longitude = Longitude(180),
-              minLat: Latitude = Latitude(-90), maxLat: Latitude = Latitude(90),
-              normalizer: (Int) => T) {
+                 minLong: Longitude = Longitude(-180), maxLong: Longitude = Longitude(180),
+                 minLat: Latitude = Latitude(-90), maxLat: Latitude = Latitude(90),
+                 normalizer: (Int) => T) {
   assert(width > 0, "width <= 0")
   assert(height > 0, "height <= 0")
   assert(maxLong.value > minLong.value, "maxLong <= minLong")

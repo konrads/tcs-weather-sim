@@ -3,7 +3,8 @@ package com.tcs.weathersim.util
 import cats.data.Validated.{invalidNel, valid}
 import cats.data.{NonEmptyList => NEL, Validated}
 import cats.std.all._
-import cats.{Semigroup, _}
+import cats.syntax.semigroup._
+import cats._
 
 import scala.util.{Failure, Success, Try}
 
@@ -30,7 +31,7 @@ object CSVCodec {
   def decode[T: CSVCodec](lines: NEL[String]): Validated[NEL[CSVParseErr], NEL[T]] =
     lines.map { line =>
       CSVCodec.decode[T](line)
-    }.unwrap.reduce(_ combine _)
+    }.unwrap.reduce(_ |+| _)
 }
 
 case class CSVParseErr(line: String, errMsg: String)

@@ -21,7 +21,7 @@ object Simulation {
 
     override def toElems(s: Simulation): Seq[String] =
       Seq(
-        s.location.map(_.self).getOrElse(""),
+        s.location.map(_.value).getOrElse(""),
         "%.2f,%.2f,%.2f".format(s.lat.value, s.long.value, s.elevation.value),
         dateFmt.print(s.dateTime),
         s.condition.toString,

@@ -1,3 +1,3 @@
 package com.tcs.weathersim.model.canonical
 
-case class Location(self: String) extends AnyVal
+case class Location(value: String) extends AnyVal

@@ -4,7 +4,7 @@ Weather Simulation
 Architecture
 ------------
 
-There are 2 entrypoints: `WeatherSimCli` and `WeatherSimTcpServer`. Both take command line params and read the config file, and boostrap by reading large PNG files (18Mb and 4Mb). `WeatherSimCli` processes the input, generates and prints the `Simulations`, and exits. However due to the boostrap, this causes a performance hit on every invocation. `WeatherSimTcpServer` only bootstraps once and awaits requests via TCP socket.
+There are 2 entrypoints: `WeatherSimCli` and `WeatherSimTcpServer`. Both take command line params and read the config file, and boostrap by reading large PNG files (18Mb and 4Mb). `WeatherSimCli` processes the input, generates and prints the `Simulations`, and exits. However due to the boostrap, this causes a performance hit on every invocation. `WeatherSimTcpServer` only bootstraps once and serves requests via TCP socket.
 
 Both entrypoint instantiate `WeatherSim`, which orchestrates construction of `Simulation`s by:
 

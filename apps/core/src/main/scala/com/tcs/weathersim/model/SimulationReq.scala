@@ -13,7 +13,7 @@ import scala.util.Try
 case class SimulationReq(lat: Latitude, long: Longitude, dt: DateTime)
 
 object SimulationReq {
-  implicit val csvCoded = new CSVCodec[SimulationReq] {
+  implicit val csvCodec = new CSVCodec[SimulationReq] {
     val dateFmt = ISODateTimeFormat.dateTimeNoMillis
 
     override def decode: PartialFunction[List[String], Try[SimulationReq]] = {

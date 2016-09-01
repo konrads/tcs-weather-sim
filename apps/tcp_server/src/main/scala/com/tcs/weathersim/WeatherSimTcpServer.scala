@@ -17,12 +17,14 @@ import scala.language.higherKinds
 import scala.util._
 
 
-// Based on:
-// https://gist.github.com/sschaef/bd5ee6273ddaa7b015af
-// http://doc.akka.io/docs/akka/2.4.9-RC1/scala/stream/stream-error.html
-
-// manual test:
-// cat valid-input.csv | netcat 127.0.0.1 6666
+/**
+  * TCp server utilizing akka streaming, based on:
+  * https://gist.github.com/sschaef/bd5ee6273ddaa7b015af
+  * http://doc.akka.io/docs/akka/2.4.9-RC1/scala/stream/stream-error.html
+  *
+  * manual test:
+  * cat valid-input.csv | netcat 127.0.0.1 6666
+  */
 object WeatherSimTcpServer {
 
   private val validSelectors = Seq("repeatable", "random")
