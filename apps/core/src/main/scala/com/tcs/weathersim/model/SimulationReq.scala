@@ -8,7 +8,8 @@ import org.joda.time.format.ISODateTimeFormat
 import scala.util.Try
 
 /**
-  * Represents a Simulation request.
+  * Represents a Simulation request. Provides means to read the Simulation in CSV format:
+  * Latitude,Longitude,iso8601Date
   */
 case class SimulationReq(lat: Latitude, long: Longitude, dt: DateTime)
 

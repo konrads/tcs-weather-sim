@@ -6,7 +6,8 @@ import javax.imageio.ImageIO
 import com.tcs.weathersim.model.canonical._
 
 /**
-  * PNGGrid encapsulates a PNG image that represents a map in Latitude/Longitude coordinates.
+  * Encapsulates a PNG image that represents a map in Latitude/Longitude coordinates.
+  * PNG pixels may hold different types of data, eg. Elevation of Land/Water MassType.
   */
 class PNGGrid[T](width: Int, height: Int, data: Array[Byte],
                  minLong: Longitude = Longitude(-180), maxLong: Longitude = Longitude(180),
@@ -31,12 +32,18 @@ class PNGGrid[T](width: Int, height: Int, data: Array[Byte],
 }
 
 object PNGGrid {
+  /**
+    * Reads a PNGGrid with Elevation values. Converts the bytes to signed integers and scales according to the highest known Elevation.
+    */
   def readElevations(resourceName: String, highestPoint: Double): PNGGrid[Elevation] = {
     val image = ImageIO.read(getClass.getResourceAsStream(resourceName))
     val data = image.getData.getDataBuffer.asInstanceOf[DataBufferByte].getData
     new PNGGrid(image.getWidth, image.getHeight, data, normalizer = (value: Int) => Elevation(value * highestPoint/256.0))
   }
 
+  /**
+    * Reads a PNGGrid with pixels representing Land (0) and Water (not 0).
+    */
   def readMassTypeMask(resourceName: String): PNGGrid[MassType] = {
     val image = ImageIO.read(getClass.getResourceAsStream(resourceName))
     val data = image.getData.getDataBuffer.asInstanceOf[DataBufferByte].getData

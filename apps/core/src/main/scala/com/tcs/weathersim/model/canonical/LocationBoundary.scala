@@ -3,7 +3,7 @@ package com.tcs.weathersim.model.canonical
 import com.typesafe.config.Config
 
 /**
-  * Helper class for definition of Seasonal boundaries.
+  * Helper class for definition of Location boundaries.
   */
 case class LocationBoundary(loc: Location, minLat: Latitude, minLong: Longitude, maxLat: Latitude, maxLong: Longitude) {
   assert(minLat.value < maxLat.value, s"location: ${loc.value}: min lat > max lat")

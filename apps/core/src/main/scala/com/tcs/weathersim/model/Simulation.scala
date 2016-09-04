@@ -9,7 +9,8 @@ import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
 
 /**
-  * Represents the Simulation output.
+  * Represents the Simulation output. Provides means to serialize the Simulation into format:
+  * Location|Latitude,Longitude,Elevation|iso8601Date|Condition|Temperature|Pressure|Humidity
   */
 case class Simulation(location: Option[Location], lat: Latitude, long: Longitude,
                       elevation: Elevation, dateTime: DateTime, condition: Condition,

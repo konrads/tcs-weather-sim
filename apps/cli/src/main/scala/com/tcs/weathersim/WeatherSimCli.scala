@@ -11,7 +11,9 @@ import com.typesafe.config.ConfigFactory
 import scala.io.Source
 
 /**
-  * Entrypoint to the Weather simulator.
+  * Command line entrypoint to the Weather simulator.
+  * Expects to read the input from a csv file in SimulationReq CSV format, prints response in Simulation PSV format
+  * (or prints input validation errors).
   */
 object WeatherSimCli {
 

@@ -3,7 +3,7 @@ package com.tcs.weathersim.model.canonical
 import org.joda.time.{DateTimeZone, DateTime}
 
 /**
-  * Helper for defining seasons of the year.
+  * Definition for the season of the year.
   */
 sealed trait Season
 case object Spring extends Season

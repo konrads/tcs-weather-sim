@@ -16,9 +16,15 @@ import com.typesafe.config.ConfigFactory
 import scala.language.higherKinds
 import scala.util._
 
-
 /**
-  * TCp server utilizing akka streaming, based on:
+  * TCP server entrypoint to the Weather simulator.
+  * Expects to receive input and respond with output on a TCP socket.
+  * The input should be in SimulationReq CSV format, the response will be in the Simulation PSV format
+  * (or input validation errors).
+  * Note: both valid response and errors both produce textual format. Should consider wrapping the
+  * response in some envelope that besides response/errors also contains failed/succeeded flag.
+  *
+  * The TCP server utilizes akka streaming, based on:
   * https://gist.github.com/sschaef/bd5ee6273ddaa7b015af
   * http://doc.akka.io/docs/akka/2.4.9-RC1/scala/stream/stream-error.html
   *
@@ -85,6 +91,9 @@ object WeatherSimTcpServer {
     }
   }
 
+  /**
+    * Akka-stream flow, can be tested separately from the entrypoint.
+    */
   def inFlow(weatherSim: WeatherSim) = Flow[ByteString]
     .withAttributes(supervisionStrategy(resumingDecider))  // ensure Future failures don't crash the flow
     .via(Framing.delimiter(ByteString("\n"), maximumFrameLength = 256, allowTruncation = true))

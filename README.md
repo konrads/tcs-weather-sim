@@ -59,7 +59,15 @@ Assumptions
   * max_temperature = 40.0
 * `Season` boundaries (defined as `SeasonalBoundaries`) begin at the start of: March, June, September, December
 * config file *must* follow the format of the default `application.conf`
+  * the order of locations in the config *must* be from most generic to least
 * Doubles are used for most measurements, except for `Humidity` which uses Int %. Should rounding-off cause discrepancies, alternative would be to switch to Int/Long, and increase the precision by multiplying by 100 or 1000 
+
+
+Snags
+-----
+* Both CLI and TCP server entrypoints utilize the same serialization methods for success/failures. With CLI, the success is indicated by exit status code = 0. In TCP server, this information is lost, hence the response should be encapsulated with an envelope that has success/failure flag. 
+* Should decouple TCP server entrypoint from the akka-stream flow it encapsulates, for the ease of testing.
+* Both entrypoints lack integration tests.
 
 
 To test
@@ -70,11 +78,13 @@ Note: some tests also load the large PNGs, hence run bit slower.
 sbt test
 ```
 
+
 To assemble deployable artifacts
 --------------------------------
 ```bash
 sbt assembly
 ```
+
 
 To run
 ------

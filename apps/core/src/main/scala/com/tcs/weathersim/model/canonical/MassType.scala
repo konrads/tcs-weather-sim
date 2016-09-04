@@ -1,7 +1,7 @@
 package com.tcs.weathersim.model.canonical
 
 /**
-  * Helper type for identifying land/water masses
+  * Identifies Land/Water surface.
   */
 sealed trait MassType
 case object Water extends MassType

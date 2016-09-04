@@ -10,7 +10,8 @@ import scala.collection.JavaConverters._
 
 
 /**
-  * Orchestrator for all services and data stores (PNG) required to produce simulation.
+  * Orchestrator for all services and data stores (PNGGrids) required to produce simulation.
+  * Bootstraping of these relies on config values.
   */
 class WeatherSim(config: Config)(implicit val selector: Selector) {
   private val pngElevation = config.getString("png_grid.elevation_resource")
